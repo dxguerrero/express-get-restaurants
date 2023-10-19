@@ -51,6 +51,18 @@ describe("POST tests", () => {
         // console.log(response.body)
         expect(response.statusCode).toBe(200);
     })
+
+    it("should throw an error for blank fields", async () =>{
+        const response = await request(app)
+        .post('/restaurants')
+        .send({
+            name: "",
+            location: "",
+            cuisine: ""
+        })
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body.error)).toBe(true);
+    })
 })
 
 describe('PUT test', () => {
