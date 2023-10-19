@@ -44,12 +44,31 @@ describe("/restaurant/:id endpoint GET tests", () => {
 } )
 
 describe("POST tests", () => {
-    it("should return updated", async () => {
+    it("should have status 200", async () => {
         const response = await request(app)
             .post("/restaurants")
             .send({name: "qwe", location: "asd", cuisine: "zxc"});
         // console.log(response.body)
         expect(response.statusCode).toBe(200);
-        expect()
+    })
+})
+
+describe('PUT test', () => {
+    it('should update a restaurant by id', async () => {
+        const response = await request(app)
+        .put('/restaurants/2')
+        .send({name: "Benihana"})
+        .expect(200)
+        expect(response.body.name).toBe("Benihana")
+    })
+})
+
+
+describe('DELETE test', () => {
+    it('should delete a restaurant by id', async () => {
+        const restaurant = await Restaurant.findByPk(2)
+        const response = await request(app)
+        .delete('/restaurants/2')
+        .expect(200)
     })
 })
